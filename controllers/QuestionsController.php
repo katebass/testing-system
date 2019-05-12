@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\QuestionsTags;
+use app\models\Tags;
 use Yii;
 use app\models\Questions;
 use app\models\QuestionsSearch;
@@ -66,7 +68,21 @@ class QuestionsController extends Controller
     {
         $model = new Questions();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->user_id = Yii::$app->user->id;
+            $model->save();
+
+            if (isset(Yii::$app->request->post('Questions')['questionsTags']['tag_id'])) {
+                $newTags = Yii::$app->request->post('Questions')['questionsTags']['tag_id'];
+
+                foreach ($newTags as $newTag) {
+                    $newRecord = new QuestionsTags();
+                    $newRecord->question_id = $model->id;
+                    $newRecord->tag_id = $newTag;
+                    $newRecord->save();
+                }
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -86,12 +102,42 @@ class QuestionsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            $oldTags = $model->questionsTags;
+            if (isset(Yii::$app->request->post('Questions')['questionsTags']['tag_id'])) {
+                $newTags = Yii::$app->request->post('Questions')['questionsTags']['tag_id'];
+
+                //if old tag is not among new -> delete
+                foreach ($oldTags as $oldTag) {
+                    if (!in_array($oldTag->tag_id, $newTags) ) {
+                        $oldTag->delete();
+                    }
+                }
+
+                // if new tag is not amont old -> create
+                foreach ($newTags as $newTag) {
+                    $oldTag = QuestionsTags::find()->where(['question_id' => $model->id, 'tag_id' => $newTag])->one();
+                    if(!$oldTag) {
+                        $newRecord = new QuestionsTags();
+                        $newRecord->question_id = $model->id;
+                        $newRecord->tag_id = $newTag;
+                        $newRecord->save();
+                    }
+                }
+            } else {
+                foreach ($oldTags as $oldTag) {
+                    $oldTag->delete();
+                }
+            }
+
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 
