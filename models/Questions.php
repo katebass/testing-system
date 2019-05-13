@@ -93,4 +93,9 @@ class Questions extends \yii\db\ActiveRecord
         return $this->hasMany(Tags::className(), ['id' => 'tag_id'])
             ->viaTable('questions_tags', ['question_id' => 'id']);
     }
+
+    public function getQuestionPacks() {
+        return $this->hasMany(QuestionsPacks::className(), ['id' => 'question_pack_id'])
+            ->viaTable('questions_packs_questions', ['question_id' => 'id']);
+    }
 }

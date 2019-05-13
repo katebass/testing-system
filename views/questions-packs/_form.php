@@ -1,5 +1,7 @@
 <?php
 
+use unclead\multipleinput\MultipleInput;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,7 +14,24 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <?php
+    echo $form->field($model, 'questionsPacksQuestions')->widget(MultipleInput::className(), [
+        'addButtonPosition' => MultipleInput::POS_HEADER, // show add button in the header
+        'min' => 1,
+        'columns' => [
+            [
+                'name'  => 'question_id',
+                'type'  => 'dropDownList',
+                'title' => 'Questions',
+                'items' => [
+                    'prompt' => 'Please, choose a question',
+                    ArrayHelper::map(app\models\Questions::find()->all(), 'id', 'name')
+                ]
+            ]
+        ]
+    ])
+        ->label(false);
+    ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
