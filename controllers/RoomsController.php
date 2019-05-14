@@ -66,7 +66,20 @@ class RoomsController extends Controller
     {
         $model = new Rooms();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->user_id = Yii::$app->user->id;
+
+            $start_datetime = Yii::$app->request->post()['Rooms']['start_datetime'];
+            $start_datetime = date("Y-m-d H:m:s", strtotime($start_datetime));
+            $model->start_datetime = $start_datetime;
+
+            $end_datetime = Yii::$app->request->post()['Rooms']['end_datetime'];
+            $end_datetime = date("Y-m-d H:m:s", strtotime($end_datetime));
+            $model->end_datetime = $end_datetime;
+
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
