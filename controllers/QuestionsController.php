@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Answers;
 use app\models\QuestionsTags;
 use app\models\Tags;
 use Yii;
@@ -116,9 +117,7 @@ class QuestionsController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 
             $oldTags = $model->questionsTags;
-//            echo "<pre>";
-//            print_r($oldTags);
-//            die;
+
             if (isset(Yii::$app->request->post('Questions')['questionsTags']['tag_id'])) {
                 $newTags = Yii::$app->request->post('Questions')['questionsTags']['tag_id'];
 
@@ -129,7 +128,7 @@ class QuestionsController extends Controller
                     }
                 }
 
-                // if new tag is not amont old -> create
+                // if new tag is not among old -> create
                 foreach ($newTags as $newTag) {
                     $oldTag = QuestionsTags::find()->where(['question_id' => $model->id, 'tag_id' => $newTag])->one();
                     if(!$oldTag) {
@@ -144,6 +143,37 @@ class QuestionsController extends Controller
                     $oldTag->delete();
                 }
             }
+
+
+            $oldAnswers = $model->answers;
+            $newAnswers = Yii::$app->request->post('Questions')['answers'];
+            $newAnswersValues = array_column($newAnswers, 'answer');
+
+            //if old answer is not among new -> delete
+            foreach ($oldAnswers as $oldAnswer) {
+                if (!in_array($oldAnswer->answer, $newAnswersValues) ) {
+                    $oldAnswer->delete();
+                }
+            }
+
+            // if new answer is not among old -> create
+            foreach ($newAnswers as $newAnswer) {
+//                echo "<pre>";
+//                print_r($newAnswer);
+//                die;
+                $oldAnswer = Answers::find()->where(['question_id' => $model->id, 'answer' => $newAnswer['answer']])->one();
+                if(!$oldAnswer) {
+                    $newRecord = new Answers();
+                    $newRecord->question_id = $model->id;
+                    $newRecord->answer = $newAnswer['answer'];
+                    $newRecord->is_correct = $newAnswer['is_correct'];
+                    $newRecord->save();
+                } else if ($oldAnswer->is_correct != $newAnswer['is_correct']) {
+                    $oldAnswer->is_correct = $newAnswer['is_correct'];
+                    $oldAnswer->save();
+                }
+            }
+
 
             $model->save();
 

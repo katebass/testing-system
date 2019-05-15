@@ -1,5 +1,7 @@
 <?php
 
+use app\models\Answers;
+use app\models\Tags;
 use unclead\multipleinput\MultipleInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -37,9 +39,27 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'question')->textarea(['rows' => 6]) ?>
 
-    <?php $form->field($model, 'points')->textInput() ?>
+    <?= $form->field($model, 'points')->textInput(['maxlength' => true]) ?>
 
-
+    <?php
+    echo $form->field($model, 'answers')->widget(MultipleInput::className(), [
+        'addButtonPosition' => MultipleInput::POS_HEADER, // show add button in the header
+        'min' => 4,
+        'columns' => [
+            [
+                'name'  => 'answer',
+                'title' => 'Answers',
+                'options' => ['required' => true]
+            ],
+            [
+                'name'  => 'is_correct',
+                'title' => 'Is correct?',
+                'type' => 'checkbox',
+            ]
+        ]
+    ])
+        ->label(false);
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
