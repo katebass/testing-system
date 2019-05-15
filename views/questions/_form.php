@@ -37,17 +37,9 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'question')->textarea(['rows' => 6]) ?>
 
-    <?php //$form->field($model, 'time_to_answer')->textInput() ?>
+    <?php $form->field($model, 'points')->textInput() ?>
 
-    <?= $form->field($model, 'time_to_answer')
-        ->widget(\janisto\timepicker\TimePicker::className(), [
-            'mode' => 'time',
-            'clientOptions' => [
-                'timeFormat' => 'mm:ss',
-                'autoFill' => false
-            ]
-        ])
-    ?>
+
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

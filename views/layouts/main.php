@@ -40,7 +40,7 @@ AppAsset::register($this);
             ['label' => 'Tags', 'url' => ['/tags/index']],
             ['label' => 'Questions Packs', 'url' => ['/questions-packs/index']],
             ['label' => 'Rooms', 'url' => ['/rooms/index']],
-            ['label' => 'Results', 'url' => ['/results/index']],
+            ['label' => 'Overall Results', 'url' => ['/rooms-candidates/index']],
             ['label' => 'Logout (' . Yii::$app->user->identity->username . ')', 'url' => ['/site/logout']]
 
         ];

@@ -21,7 +21,7 @@ class m190511_073933_create_questions_table extends Migration
             'user_id' => $this->integer(10),
             'name' => $this->string()->notNull(),
             'question' => $this->text()->notNull(),
-            'time_to_answer' => $this->time()->notNull(),
+            'points' => $this->float()->notNull()->defaultValue(1),
         ]);
 
         $this->addForeignKey(

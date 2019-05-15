@@ -19,8 +19,9 @@ class m190511_145233_create_rooms_table extends Migration
             //'user_id' => $this->integer()->notNull(),
             'questions_pack_id' => $this->integer()->notNull(),
             'name' => $this->string(256)->notNull(),
-            'start_datetime' => $this->dateTime()->notNull(),
+            'start_datetime' => $this->dateTime(),
             'end_datetime' => $this->dateTime(),
+            'state' => $this->string()->defaultValue('not started')
         ]);
 
 //        $this->addForeignKey(

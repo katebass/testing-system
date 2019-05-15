@@ -22,18 +22,17 @@ class QuestionsController extends Controller
      */
     public function behaviors()
     {
-
         return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'rules' => [
-//                    [
-//                        'actions' => ['create'],
-//                        'allow' => true,
-//                        'roles' => ['manager'],
-//                    ],
-//                ],
-//            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'delete', 'view'],
+                        'allow' => true,
+                        'roles' => ['manager'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -116,7 +115,10 @@ class QuestionsController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $oldTags = $model;
+            $oldTags = $model->questionsTags;
+//            echo "<pre>";
+//            print_r($oldTags);
+//            die;
             if (isset(Yii::$app->request->post('Questions')['questionsTags']['tag_id'])) {
                 $newTags = Yii::$app->request->post('Questions')['questionsTags']['tag_id'];
 

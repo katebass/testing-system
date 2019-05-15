@@ -11,7 +11,6 @@ use Yii;
  * @property int $user_id
  * @property string $name
  * @property string $question
- * @property string $time_to_answer
  *
  * @property Answers[] $answers
  * @property User $user
@@ -34,10 +33,9 @@ class Questions extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id'], 'integer'],
-            [['name', 'question', 'time_to_answer'], 'required'],
+            [['user_id', 'points'], 'integer'],
+            [['name', 'question'], 'required'],
             [['question'], 'string'],
-            [['time_to_answer'], 'safe'],
             [['name'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -53,7 +51,6 @@ class Questions extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'name' => 'Name',
             'question' => 'Question',
-            'time_to_answer' => 'Time To Answer',
         ];
     }
 

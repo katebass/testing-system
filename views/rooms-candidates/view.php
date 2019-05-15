@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Questions */
+/* @var $model app\models\RoomsCandidates */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Questions', 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Rooms Candidates', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="questions-view">
+<div class="rooms-candidates-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,9 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'name',
-            'question:ntext',
+            'id',
+            'room_id',
+            'candidate_id',
             'points',
+            'conclusion:ntext',
         ],
     ]) ?>
 

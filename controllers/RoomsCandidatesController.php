@@ -3,17 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Tags;
-use app\models\TagsSearch;
-use yii\filters\AccessControl;
+use app\models\RoomsCandidates;
+use app\models\RoomsCandidatesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * TagsController implements the CRUD actions for Tags model.
+ * RoomsCandidatesController implements the CRUD actions for RoomsCandidates model.
  */
-class TagsController extends Controller
+class RoomsCandidatesController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -27,26 +26,16 @@ class TagsController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['index', 'create', 'update', 'delete', 'view'],
-                        'allow' => true,
-                        'roles' => ['manager'],
-                    ],
-                ],
-            ],
         ];
     }
 
     /**
-     * Lists all Tags models.
+     * Lists all RoomsCandidates models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TagsSearch();
+        $searchModel = new RoomsCandidatesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -56,7 +45,7 @@ class TagsController extends Controller
     }
 
     /**
-     * Displays a single Tags model.
+     * Displays a single RoomsCandidates model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -69,13 +58,13 @@ class TagsController extends Controller
     }
 
     /**
-     * Creates a new Tags model.
+     * Creates a new RoomsCandidates model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Tags();
+        $model = new RoomsCandidates();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -87,7 +76,7 @@ class TagsController extends Controller
     }
 
     /**
-     * Updates an existing Tags model.
+     * Updates an existing RoomsCandidates model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -107,7 +96,7 @@ class TagsController extends Controller
     }
 
     /**
-     * Deletes an existing Tags model.
+     * Deletes an existing RoomsCandidates model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -121,15 +110,15 @@ class TagsController extends Controller
     }
 
     /**
-     * Finds the Tags model based on its primary key value.
+     * Finds the RoomsCandidates model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Tags the loaded model
+     * @return RoomsCandidates the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Tags::findOne($id)) !== null) {
+        if (($model = RoomsCandidates::findOne($id)) !== null) {
             return $model;
         }
 

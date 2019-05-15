@@ -4,18 +4,18 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\QuestionsSearch */
+/* @var $searchModel app\models\RoomsCandidatesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Questions';
+$this->title = 'Rooms Candidates';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="questions-index">
+<div class="rooms-candidates-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Questions', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Rooms Candidates', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -26,10 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'user_id',
-            'name',
-            'question:ntext',
+            'id',
+            'room_id',
+            'candidate_id',
             'points',
+            'conclusion:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

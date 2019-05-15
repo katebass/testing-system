@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Questions;
+use app\models\RoomsCandidates;
 
 /**
- * QuestionsSearch represents the model behind the search form of `app\models\Questions`.
+ * RoomsCandidatesSearch represents the model behind the search form of `app\models\RoomsCandidates`.
  */
-class QuestionsSearch extends Questions
+class RoomsCandidatesSearch extends RoomsCandidates
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,9 @@ class QuestionsSearch extends Questions
     public function rules()
     {
         return [
-            [['id', 'user_id'], 'integer'],
-            [['name', 'question'], 'safe'],
+            [['id', 'room_id', 'candidate_id'], 'integer'],
+            [['points'], 'number'],
+            [['conclusion'], 'safe'],
         ];
     }
 
@@ -40,7 +41,7 @@ class QuestionsSearch extends Questions
      */
     public function search($params)
     {
-        $query = Questions::find();
+        $query = RoomsCandidates::find();
 
         // add conditions that should always apply here
 
@@ -59,11 +60,12 @@ class QuestionsSearch extends Questions
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
+            'room_id' => $this->room_id,
+            'candidate_id' => $this->candidate_id,
+            'points' => $this->points,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'question', $this->question]);
+        $query->andFilterWhere(['like', 'conclusion', $this->conclusion]);
 
         return $dataProvider;
     }

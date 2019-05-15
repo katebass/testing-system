@@ -7,6 +7,7 @@ use app\models\QuestionsTags;
 use Yii;
 use app\models\QuestionsPacks;
 use app\models\QuestionsPacksSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +27,16 @@ class QuestionsPacksController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'delete', 'view'],
+                        'allow' => true,
+                        'roles' => ['manager'],
+                    ],
                 ],
             ],
         ];
