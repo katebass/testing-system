@@ -1,8 +1,8 @@
 <?php
 
+use unclead\multipleinput\MultipleInput;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -54,6 +54,26 @@ use yii\widgets\ActiveForm;
             ]
         ]
     );
+    ?>
+
+    <?php
+    echo $form->field($model, 'roomsCandidates')->widget(MultipleInput::className(), [
+        'addButtonPosition' => MultipleInput::POS_HEADER, // show add button in the header
+        'min' => 2,
+        'max' => 2,
+        'columns' => [
+            [
+                'name'  => 'candidate_id',
+                'type'  => 'dropDownList',
+                'title' => 'Candidates Emails',
+                'items' => [
+                    'prompt' => 'Please, choose a user',
+                    ArrayHelper::map(app\models\User::find()->all(), 'id', 'email')
+                ]
+            ]
+        ]
+    ])
+        ->label(false);
     ?>
 
     <div class="form-group">

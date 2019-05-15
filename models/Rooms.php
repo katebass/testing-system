@@ -8,15 +8,13 @@ use Yii;
  * This is the model class for table "rooms".
  *
  * @property int $id
- * @property int $user_id
  * @property int $questions_pack_id
  * @property string $name
  * @property string $start_datetime
  * @property string $end_datetime
  *
- * @property Results[] $results
  * @property QuestionsPacks $questionsPack
- * @property User $user
+ * @property RoomsCandidates[] $roomsCandidates
  */
 class Rooms extends \yii\db\ActiveRecord
 {
@@ -34,12 +32,11 @@ class Rooms extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'questions_pack_id', 'name', 'start_datetime'], 'required'],
-            [['user_id', 'questions_pack_id'], 'integer'],
+            [['questions_pack_id', 'name', 'start_datetime'], 'required'],
+            [['questions_pack_id'], 'integer'],
             [['start_datetime', 'end_datetime'], 'safe'],
             [['name'], 'string', 'max' => 256],
             [['questions_pack_id'], 'exist', 'skipOnError' => true, 'targetClass' => QuestionsPacks::className(), 'targetAttribute' => ['questions_pack_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -50,20 +47,11 @@ class Rooms extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
             'questions_pack_id' => 'Questions Pack ID',
             'name' => 'Name',
             'start_datetime' => 'Start Datetime',
             'end_datetime' => 'End Datetime',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getResults()
-    {
-        return $this->hasMany(Results::className(), ['room_id' => 'id']);
     }
 
     /**
@@ -77,8 +65,8 @@ class Rooms extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getRoomsCandidates()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasMany(RoomsCandidates::className(), ['room_id' => 'id']);
     }
 }

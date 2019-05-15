@@ -44,6 +44,7 @@ use yii\helpers\ArrayHelper;
             'mode' => 'time',
             'clientOptions' => [
                 'timeFormat' => 'mm:ss',
+                'autoFill' => false
             ]
         ])
     ?>

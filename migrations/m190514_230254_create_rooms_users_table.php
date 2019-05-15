@@ -3,27 +3,27 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%results}}`.
+ * Handles the creation of table `{{%rooms_users}}`.
  */
-class m190511_145638_create_results_table extends Migration
+class m190514_230254_create_rooms_users_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->dropTable('results');
-        $this->createTable('results', [
+        $this->dropTable('rooms_candidates');
+        $this->createTable('rooms_candidates', [
             'id' => $this->primaryKey(),
             'room_id' => $this->integer()->notNull(),
-            'user_id' => $this->integer()->notNull(),
-            'points' => $this->float(),
+            'candidate_id' => $this->integer()->notNull(),
+            'points' => $this->float()->defaultValue(0),
             'conclusion' => $this->text()
         ]);
 
         $this->addForeignKey(
-            'results_room_fk',
-            'results',
+            'rooms_candidates_room_fk',
+            'rooms_candidates',
             'room_id',
             'rooms',
             'id',
@@ -32,9 +32,9 @@ class m190511_145638_create_results_table extends Migration
         );
 
         $this->addForeignKey(
-            'results_user_fk',
-            'results',
-            'user_id',
+            'rooms_candidates_user_fk',
+            'rooms_candidates',
+            'candidate_id',
             'user',
             'id',
             'CASCADE',
@@ -47,6 +47,6 @@ class m190511_145638_create_results_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('results');
+        $this->dropTable('{{%rooms_users}}');
     }
 }

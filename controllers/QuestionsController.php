@@ -7,6 +7,7 @@ use app\models\Tags;
 use Yii;
 use app\models\Questions;
 use app\models\QuestionsSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,7 +22,18 @@ class QuestionsController extends Controller
      */
     public function behaviors()
     {
+
         return [
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'rules' => [
+//                    [
+//                        'actions' => ['create'],
+//                        'allow' => true,
+//                        'roles' => ['manager'],
+//                    ],
+//                ],
+//            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -104,7 +116,7 @@ class QuestionsController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $oldTags = $model->questionsTags;
+            $oldTags = $model;
             if (isset(Yii::$app->request->post('Questions')['questionsTags']['tag_id'])) {
                 $newTags = Yii::$app->request->post('Questions')['questionsTags']['tag_id'];
 

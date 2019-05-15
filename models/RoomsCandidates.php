@@ -5,25 +5,25 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "results".
+ * This is the model class for table "rooms_candidates".
  *
  * @property int $id
  * @property int $room_id
- * @property int $user_id
+ * @property int $candidate_id
  * @property double $points
  * @property string $conclusion
  *
  * @property Rooms $room
- * @property User $user
+ * @property User $candidate
  */
-class Results extends \yii\db\ActiveRecord
+class RoomsCandidates extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'results';
+        return 'rooms_candidates';
     }
 
     /**
@@ -32,12 +32,12 @@ class Results extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['room_id', 'user_id'], 'required'],
-            [['room_id', 'user_id'], 'integer'],
+            [['room_id', 'candidate_id'], 'required'],
+            [['room_id', 'candidate_id'], 'integer'],
             [['points'], 'number'],
             [['conclusion'], 'string'],
             [['room_id'], 'exist', 'skipOnError' => true, 'targetClass' => Rooms::className(), 'targetAttribute' => ['room_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['candidate_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['candidate_id' => 'id']],
         ];
     }
 
@@ -49,7 +49,7 @@ class Results extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'room_id' => 'Room ID',
-            'user_id' => 'User ID',
+            'candidate_id' => 'Candidate ID',
             'points' => 'Points',
             'conclusion' => 'Conclusion',
         ];
@@ -66,8 +66,8 @@ class Results extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getCandidate()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'candidate_id']);
     }
 }

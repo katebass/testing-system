@@ -17,7 +17,7 @@ class RoomsSearch extends Rooms
     public function rules()
     {
         return [
-            [['id', 'user_id', 'questions_pack_id'], 'integer'],
+            [['id', 'questions_pack_id'], 'integer'],
             [['name', 'start_datetime', 'end_datetime'], 'safe'],
         ];
     }
@@ -59,7 +59,6 @@ class RoomsSearch extends Rooms
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
             'questions_pack_id' => $this->questions_pack_id,
             'start_datetime' => $this->start_datetime,
             'end_datetime' => $this->end_datetime,

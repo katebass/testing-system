@@ -7,11 +7,12 @@ class SignupForm extends Model{
 
     public $username;
     public $password;
+    public $email;
 
     public function rules() {
         return [
-            [['username', 'password'], 'required', 'message' => 'Заполните поле'],
-            ['username', 'unique', 'targetClass' => User::className(),  'message' => 'Этот логин уже занят'],
+            [['username', 'password', 'email'], 'required'],
+            ['username', 'unique', 'targetClass' => User::className(),  'message' => 'This username is already in use'],
         ];
     }
 
