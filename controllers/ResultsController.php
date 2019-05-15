@@ -33,7 +33,7 @@ class ResultsController extends Controller
                     [
                         'actions' => ['create', 'update', 'delete'],
                         'allow' => true,
-                        'roles' => ['manager'],
+                        'roles' => ['manager', 'admin'],
                     ],
                     [
                         'actions' => ['index', 'view'],

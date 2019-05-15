@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\RoomsCandidates;
 use app\models\RoomsCandidatesSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -24,6 +25,16 @@ class RoomsCandidatesController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'delete', 'view'],
+                        'allow' => true,
+                        'roles' => ['manager', 'admin'],
+                    ],
                 ],
             ],
         ];

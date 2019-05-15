@@ -29,7 +29,7 @@ class QuestionsController extends Controller
                     [
                         'actions' => ['index', 'create', 'update', 'delete', 'view'],
                         'allow' => true,
-                        'roles' => ['manager'],
+                        'roles' => ['manager', 'admin'],
                     ],
                 ],
             ],
