@@ -32,8 +32,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'questions_pack_id',
             'name',
-            'start_datetime',
-            'end_datetime',
+            [
+                'attribute' => 'start_datetime',
+                'value' => function ($model) {
+                    return $model->start_datetime ? $model->start_datetime : 'Not started';
+                },
+            ],
+            [
+                'attribute' => 'end_datetime',
+                'value' => function ($model) {
+                    return $model->end_datetime ? $model->end_datetime : 'Not ended';
+                },
+            ],
             'state',
             'points',
         ],

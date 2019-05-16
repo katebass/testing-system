@@ -33,6 +33,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             'candidate_id',
+            [
+                'label' => 'Candidate Name',
+                'value' => function ($model) {
+                    return $model->candidate->name;
+                },
+            ],
+            [
+                'label' => 'email',
+                'value' => function ($model) {
+                    return $model->candidate->email;
+                },
+            ],
             'points',
             [
                 'attribute' => 'conclusion',

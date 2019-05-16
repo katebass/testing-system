@@ -41,7 +41,7 @@ AppAsset::register($this);
             ['label' => 'Questions Packs', 'url' => ['/questions-packs/index']],
             ['label' => 'Rooms', 'url' => ['/rooms/index']],
             ['label' => 'Overall Results', 'url' => ['/rooms-candidates/index']],
-            ['label' => 'Logout (' . Yii::$app->user->identity->username . ')', 'url' => ['/site/logout']]
+            ['label' => 'Logout (' . Yii::$app->user->identity->name . ')', 'url' => ['/site/logout']]
 
         ];
     }

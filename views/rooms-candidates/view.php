@@ -30,10 +30,33 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'room_id',
+            [
+                'attribute' => 'conclusion',
+                'label' => 'Room name',
+                'value' => function ($model) {
+                    return $model->room->name;
+                },
+            ],
             'candidate_id',
+            [
+                'label' => 'email',
+                'value' => function ($model) {
+                    return $model->candidate->email;
+                },
+            ],
+            [
+                'label' => 'Candidate Name',
+                'value' => function ($model) {
+                    return $model->candidate->name;
+                },
+            ],
             'points',
-            'conclusion:ntext',
+            [
+                'attribute' => 'conclusion',
+                'value' => function ($model) {
+                    return $model->conclusion ? $model->conclusion : 'Not overviewed yet';
+                },
+            ],
         ],
     ]) ?>
 
