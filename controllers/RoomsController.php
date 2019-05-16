@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Answers;
 use app\models\RoomsCandidates;
 use Yii;
 use app\models\Rooms;
@@ -79,22 +80,29 @@ class RoomsController extends Controller
         $model = new Rooms();
 
         if ($model->load(Yii::$app->request->post())) {
-
-            $model->user_id = Yii::$app->user->id;
-
-
-            $start_datetime = Yii::$app->request->post()['Rooms']['start_datetime'];
-            $start_datetime = date("Y-m-d H:m:s", strtotime($start_datetime));
-            $model->start_datetime = $start_datetime;
-
-            $end_datetime = Yii::$app->request->post()['Rooms']['end_datetime'];
-            $end_datetime = date("Y-m-d H:m:s", strtotime($end_datetime));
-            $model->end_datetime = $end_datetime;
+//            $start_datetime = Yii::$app->request->post()['Rooms']['start_datetime'];
+//            $start_datetime = date("Y-m-d H:m:s", strtotime($start_datetime));
+//            $model->start_datetime = $start_datetime;
+//
+//            $end_datetime = Yii::$app->request->post()['Rooms']['end_datetime'];
+//            $end_datetime = date("Y-m-d H:m:s", strtotime($end_datetime));
+//            $model->end_datetime = $end_datetime;
 
             $model->save();
 
+            $newCandidates = Yii::$app->request->post('Rooms')['roomsCandidates']['candidate_id'];
+
+            foreach ($newCandidates as $newCandidate) {
+                $newRecord = new RoomsCandidates();
+                $newRecord->room_id = $model->id;
+                $newRecord->candidate_id = $newCandidate;
+                $newRecord->save();
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
+
 
         return $this->render('create', [
             'model' => $model,
@@ -115,20 +123,27 @@ class RoomsController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $start_datetime = Yii::$app->request->post()['Rooms']['start_datetime'];
-            $start_datetime = date("Y-m-d H:m:s", strtotime($start_datetime));
-            $model->start_datetime = $start_datetime;
+            $questions = $model->questionsPack->questions;
+            $points = 0;
+            foreach ($questions as $question) {
+                $points += $question->points;
+            }
 
-            $end_datetime = Yii::$app->request->post()['Rooms']['end_datetime'];
-            $end_datetime = date("Y-m-d H:m:s", strtotime($end_datetime));
-            $model->end_datetime = $end_datetime;
+            $model->points = $points;
+
+            if (isset(Yii::$app->request->post()['Rooms']['start_datetime'])) {
+                $start_datetime = Yii::$app->request->post()['Rooms']['start_datetime'];
+                $start_datetime = date("Y-m-d H:m:s", strtotime($start_datetime));
+                $model->start_datetime = $start_datetime;
+            }
+            if (isset(Yii::$app->request->post()['Rooms']['end_datetime'])) {
+                $end_datetime = Yii::$app->request->post()['Rooms']['end_datetime'];
+                $end_datetime = date("Y-m-d H:m:s", strtotime($end_datetime));
+                $model->end_datetime = $end_datetime;
+            }
 
             $oldCandidates = $model->roomsCandidates;
             $newCandidates = Yii::$app->request->post('Rooms')['roomsCandidates']['candidate_id'];
-
-//            echo "<pre>";
-//            print_r($newCandidates);
-//            die;
 
             //if old tag is not among new -> delete
             foreach ($oldCandidates as $oldCandidate) {

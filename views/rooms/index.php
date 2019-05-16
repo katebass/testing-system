@@ -26,10 +26,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'questions_pack_id',
+            [
+                'attribute' => 'questions_pack_id',
+                'value' => function ($model) {
+                    $Pack = \app\models\QuestionsPacks::find()
+                        ->where(['id' => $model->questions_pack_id])->one();
+                    return $Pack['name'];
+                },
+            ],
             'name',
-            'start_datetime',
-            'end_datetime',
+            [
+                'attribute' => 'start_datetime',
+                'value' => function ($model) {
+                    return $model->start_datetime ? $model->start_datetime : 'Not started';
+                },
+            ],
+            [
+                'attribute' => 'end_datetime',
+                'value' => function ($model) {
+                    return $model->end_datetime ? $model->end_datetime : 'Not ended';
+                },
+            ],
+            'state',
+            'points',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

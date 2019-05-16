@@ -96,6 +96,10 @@ a.desc:after {
     border: none;
 }
 
+.navbar-inverse {
+    background-color: #031f4c;
+}
+
 @media(max-width:767px) {
     .nav li > form > button.logout {
         display:block;

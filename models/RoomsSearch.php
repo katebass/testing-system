@@ -18,7 +18,8 @@ class RoomsSearch extends Rooms
     {
         return [
             [['id', 'questions_pack_id'], 'integer'],
-            [['name', 'start_datetime', 'end_datetime'], 'safe'],
+            [['name', 'start_datetime', 'end_datetime', 'state'], 'safe'],
+            [['points'], 'number'],
         ];
     }
 
@@ -62,9 +63,11 @@ class RoomsSearch extends Rooms
             'questions_pack_id' => $this->questions_pack_id,
             'start_datetime' => $this->start_datetime,
             'end_datetime' => $this->end_datetime,
+            'points' => $this->points,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'state', $this->state]);
 
         return $dataProvider;
     }

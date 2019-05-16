@@ -24,36 +24,38 @@ use yii\widgets\ActiveForm;
 
 
 
-    <?php echo $form->field($model, 'start_datetime')->widget(
-        'trntv\yii\datetime\DateTimeWidget',
-        [
-            'phpDatetimeFormat' => 'dd.MM.yyyy, HH:mm:ss',
-            'clientOptions' => [
-                'allowInputToggle' => false,
-                'sideBySide' => true,
-                'widgetPositioning' => [
-                    'horizontal' => 'auto',
-                    'vertical' => 'auto'
-                ]
-            ]
-        ]
-    );
+    <?php
+//    echo $form->field($model, 'start_datetime')->widget(
+//        'trntv\yii\datetime\DateTimeWidget',
+//        [
+//            'phpDatetimeFormat' => 'dd.MM.yyyy, HH:mm:ss',
+//            'clientOptions' => [
+//                'allowInputToggle' => false,
+//                'sideBySide' => true,
+//                'widgetPositioning' => [
+//                    'horizontal' => 'auto',
+//                    'vertical' => 'auto'
+//                ]
+//            ]
+//        ]
+//    );
     ?>
 
-    <?php echo $form->field($model, 'end_datetime')->widget(
-        'trntv\yii\datetime\DateTimeWidget',
-        [
-            'phpDatetimeFormat' => 'dd.MM.yyyy, HH:mm:ss',
-            'clientOptions' => [
-                'allowInputToggle' => false,
-                'sideBySide' => true,
-                'widgetPositioning' => [
-                    'horizontal' => 'auto',
-                    'vertical' => 'auto'
-                ]
-            ]
-        ]
-    );
+    <?php
+//    echo $form->field($model, 'end_datetime')->widget(
+//        'trntv\yii\datetime\DateTimeWidget',
+//        [
+//            'phpDatetimeFormat' => 'dd.MM.yyyy, HH:mm:ss',
+//            'clientOptions' => [
+//                'allowInputToggle' => false,
+//                'sideBySide' => true,
+//                'widgetPositioning' => [
+//                    'horizontal' => 'auto',
+//                    'vertical' => 'auto'
+//                ]
+//            ]
+//        ]
+//    );
     ?>
 
     <?php

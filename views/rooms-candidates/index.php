@@ -25,12 +25,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'room_id',
+            [
+                'attribute' => 'conclusion',
+                'label' => 'Room name',
+                'value' => function ($model) {
+                    return $model->room->name;
+                },
+            ],
             'candidate_id',
             'points',
-            'conclusion:ntext',
+            [
+                'attribute' => 'conclusion',
+                'value' => function ($model) {
+                    return $model->conclusion ? $model->conclusion : 'Not overviewed yet';
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

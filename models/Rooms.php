@@ -12,6 +12,8 @@ use Yii;
  * @property string $name
  * @property string $start_datetime
  * @property string $end_datetime
+ * @property string $state
+ * @property double $points
  *
  * @property QuestionsPacks $questionsPack
  * @property RoomsCandidates[] $roomsCandidates
@@ -35,7 +37,9 @@ class Rooms extends \yii\db\ActiveRecord
             [['questions_pack_id', 'name'], 'required'],
             [['questions_pack_id'], 'integer'],
             [['start_datetime', 'end_datetime'], 'safe'],
+            [['points'], 'number'],
             [['name'], 'string', 'max' => 256],
+            [['state'], 'string', 'max' => 255],
             [['questions_pack_id'], 'exist', 'skipOnError' => true, 'targetClass' => QuestionsPacks::className(), 'targetAttribute' => ['questions_pack_id' => 'id']],
         ];
     }
@@ -51,6 +55,8 @@ class Rooms extends \yii\db\ActiveRecord
             'name' => 'Name',
             'start_datetime' => 'Start Datetime',
             'end_datetime' => 'End Datetime',
+            'state' => 'State',
+            'points' => 'Points',
         ];
     }
 

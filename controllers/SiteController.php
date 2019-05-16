@@ -140,6 +140,9 @@ class SiteController extends Controller
             $user->email = $model->email;
             $user->password = \Yii::$app->security->generatePasswordHash($model->password);
             if($user->save()){
+                $userRole = Yii::$app->authManager->getRole('candidate');
+                Yii::$app->authManager->assign($userRole, $user->id);
+
                 return $this->goHome();
             }
         }

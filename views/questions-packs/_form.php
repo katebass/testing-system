@@ -26,7 +26,8 @@ use yii\widgets\ActiveForm;
                 'items' => [
                     'prompt' => 'Please, choose a question',
                     ArrayHelper::map(app\models\Questions::find()->all(), 'id', 'name')
-                ]
+                ],
+                'options' => ['required' => true]
             ]
         ]
     ])

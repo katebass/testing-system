@@ -95,6 +95,16 @@ class QuestionsController extends Controller
                 }
             }
 
+            $newAnswers = Yii::$app->request->post('Questions')['answers'];
+
+            foreach ($newAnswers as $newAnswer) {
+                $newRecord = new Answers();
+                $newRecord->question_id = $model->id;
+                $newRecord->answer = $newAnswer['answer'];
+                $newRecord->is_correct = $newAnswer['is_correct'];
+                $newRecord->save();
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -143,7 +153,6 @@ class QuestionsController extends Controller
                     $oldTag->delete();
                 }
             }
-
 
             $oldAnswers = $model->answers;
             $newAnswers = Yii::$app->request->post('Questions')['answers'];

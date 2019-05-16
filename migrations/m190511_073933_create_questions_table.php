@@ -19,7 +19,7 @@ class m190511_073933_create_questions_table extends Migration
         $this->createTable('questions', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer(10),
-            'name' => $this->string()->notNull(),
+            'name' => $this->string()->notNull()->unique(),
             'question' => $this->text()->notNull(),
             'points' => $this->float()->notNull()->defaultValue(1),
         ]);
