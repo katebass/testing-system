@@ -21,7 +21,8 @@ class m190511_145233_create_rooms_table extends Migration
             'name' => $this->string(256)->notNull(),
             'start_datetime' => $this->dateTime(),
             'end_datetime' => $this->dateTime(),
-            'state' => $this->string()->defaultValue('not started')
+            'state' => $this->string()->defaultValue('not started'),
+            'points' => $this->float()->defaultValue('1')
         ]);
 
 //        $this->addForeignKey(

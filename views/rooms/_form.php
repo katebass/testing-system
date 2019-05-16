@@ -67,7 +67,7 @@ use yii\widgets\ActiveForm;
                 'type'  => 'dropDownList',
                 'title' => 'Candidates Emails',
                 'items' => [
-                    'prompt' => 'Please, choose a user',
+                    'prompt' => 'Please, choose a user email',
                     ArrayHelper::map(app\models\User::find()->all(), 'id', 'email')
                 ]
             ]

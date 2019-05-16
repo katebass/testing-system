@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\RoomsCandidates;
 use Yii;
 use app\models\Rooms;
 use app\models\RoomsSearch;
@@ -121,6 +122,32 @@ class RoomsController extends Controller
             $end_datetime = Yii::$app->request->post()['Rooms']['end_datetime'];
             $end_datetime = date("Y-m-d H:m:s", strtotime($end_datetime));
             $model->end_datetime = $end_datetime;
+
+            $oldCandidates = $model->roomsCandidates;
+            $newCandidates = Yii::$app->request->post('Rooms')['roomsCandidates']['candidate_id'];
+
+//            echo "<pre>";
+//            print_r($newCandidates);
+//            die;
+
+            //if old tag is not among new -> delete
+            foreach ($oldCandidates as $oldCandidate) {
+                if (!in_array($oldCandidate->candidate_id, $newCandidates) ) {
+                    $oldCandidate->delete();
+                }
+            }
+
+            // if new tag is not among old -> create
+            foreach ($newCandidates as $newCandidate) {
+                $oldCandidate = RoomsCandidates::find()
+                                         ->where(['room_id' => $model->id, 'candidate_id' => $newCandidate])->one();
+                if(!$oldCandidate) {
+                    $newRecord = new RoomsCandidates();
+                    $newRecord->room_id = $model->id;
+                    $newRecord->candidate_id = $newCandidate;
+                    $newRecord->save();
+                }
+            }
 
             $model->save();
 

@@ -13,6 +13,13 @@ class m190515_201556_create_rooms_records extends Migration
     public function safeUp()
     {
         $this->execute("
+            insert into `answers` (`question_id`, `answer`, `is_correct`)
+            values (1, 'nothing', 0),
+                   (1, 'something', 1),
+                   (1, 'anything', 0),
+                   (1, 'everything', 1)");
+
+        $this->execute("
             insert into `rooms` (`questions_pack_id`, `name`)
             values (1, 'room1'),
                    (2, 'room2')");

@@ -158,9 +158,6 @@ class QuestionsController extends Controller
 
             // if new answer is not among old -> create
             foreach ($newAnswers as $newAnswer) {
-//                echo "<pre>";
-//                print_r($newAnswer);
-//                die;
                 $oldAnswer = Answers::find()->where(['question_id' => $model->id, 'answer' => $newAnswer['answer']])->one();
                 if(!$oldAnswer) {
                     $newRecord = new Answers();

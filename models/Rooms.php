@@ -32,7 +32,7 @@ class Rooms extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['questions_pack_id', 'name', 'start_datetime'], 'required'],
+            [['questions_pack_id', 'name'], 'required'],
             [['questions_pack_id'], 'integer'],
             [['start_datetime', 'end_datetime'], 'safe'],
             [['name'], 'string', 'max' => 256],
