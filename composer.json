@@ -21,7 +21,8 @@
         "janisto/yii2-timepicker": "*",
         "unclead/yii2-multiple-input": "~2.0",
         "yiisoft/yii2-jui": "^2.0",
-        "trntv/yii2-datetime-widget": "^1.1"
+        "trntv/yii2-datetime-widget": "^1.1",
+        "yii2mod/yii2-editable": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

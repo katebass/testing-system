@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii2mod\editable\EditableAction;
 
 /**
  * RoomsCandidatesController implements the CRUD actions for RoomsCandidates model.
@@ -31,11 +32,21 @@ class RoomsCandidatesController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'create', 'update', 'delete', 'view'],
+                        'actions' => ['index', 'create', 'update', 'delete', 'view', 'change-conclusion'],
                         'allow' => true,
                         'roles' => ['manager', 'admin'],
                     ],
                 ],
+            ],
+        ];
+    }
+
+    public function actions()
+    {
+        return [
+            'change-conclusion' => [
+                'class' => EditableAction::class,
+                'modelClass' => RoomsCandidates::class,
             ],
         ];
     }

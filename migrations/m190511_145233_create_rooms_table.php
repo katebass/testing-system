@@ -16,24 +16,13 @@ class m190511_145233_create_rooms_table extends Migration
         $this->dropTable('rooms');
         $this->createTable('rooms', [
             'id' => $this->primaryKey(),
-            //'user_id' => $this->integer()->notNull(),
             'questions_pack_id' => $this->integer()->notNull(),
             'name' => $this->string(256)->notNull()->unique(),
             'start_datetime' => $this->dateTime(),
             'end_datetime' => $this->dateTime(),
-            'state' => $this->string()->defaultValue('not started'),
+            'state' => $this->string()->defaultValue('Not started'),
             'points' => $this->float()->defaultValue('1')
         ]);
-
-//        $this->addForeignKey(
-//            'rooms_user_fk',
-//            'rooms',
-//            'user_id',
-//            'user',
-//            'id',
-//            'CASCADE',
-//            'CASCADE'
-//        );
 
         $this->addForeignKey(
             'rooms_questions_pack_fk',

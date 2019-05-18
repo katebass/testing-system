@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii2mod\editable\EditableColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RoomsCandidatesSearch */
@@ -32,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->room->name;
                 },
             ],
-            'candidate_id',
             [
                 'label' => 'Candidate Name',
                 'value' => function ($model) {
@@ -40,17 +40,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'label' => 'email',
+                'label' => 'Candidate Email',
                 'value' => function ($model) {
                     return $model->candidate->email;
                 },
             ],
             'points',
             [
+                'class' => EditableColumn::class,
                 'attribute' => 'conclusion',
                 'value' => function ($model) {
                     return $model->conclusion ? $model->conclusion : 'Not overviewed yet';
                 },
+                'url' => ['change-conclusion'],
             ],
 
             ['class' => 'yii\grid\ActionColumn'],

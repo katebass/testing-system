@@ -49,8 +49,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'state',
             'points',
+            [
+            'class' => 'yii\grid\ActionColumn',
+            'template' => '{openRoom}',
+            'buttons' => [
+                'openRoom' => function($url, $model) {     // render your custom button
+                    return Html::a('Open Room', ['/rooms/view?id=' . $model->id], ['class'=>'btn btn-primary']);
+                }
+            ]
+        ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{update}{delete}'],
         ],
     ]); ?>
 

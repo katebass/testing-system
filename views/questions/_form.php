@@ -10,6 +10,12 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\Questions */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->registerJsFile(
+    Yii::$app->request->baseUrl.'/js/questions.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+
 ?>
 
 <div class="questions-form">
@@ -55,6 +61,10 @@ use yii\helpers\ArrayHelper;
                 'name'  => 'is_correct',
                 'title' => 'Is correct?',
                 'type' => 'checkbox',
+                'options' => [
+                    'class' => 'radio',
+                    'group-name' => 'is-right-checkbox'
+                ],
             ]
         ]
     ])
