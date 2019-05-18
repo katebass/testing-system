@@ -14,8 +14,8 @@ class m190510_191434_create_user_table extends Migration
     {
         $this->dropForeignKey('questions_users_fk', 'questions');
         $this->dropForeignKey('questions_pack_user_fk', 'questions_packs');
-        //$this->dropForeignKey('rooms_user_fk', 'rooms');
         $this->dropForeignKey('rooms_candidates_user_fk', 'rooms_candidates');
+        $this->dropForeignKey('candidates_answers_users_fk', 'candidates_answers');
         $this->dropTable('user');
 
         $this->createTable('user', [

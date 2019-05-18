@@ -12,6 +12,7 @@ class m190511_075524_create_answers_table extends Migration
      */
     public function safeUp()
     {
+        $this->dropForeignKey('candidates_answers_answers_fk', 'candidates_answers');
         $this->dropTable('answers');
         $this->createTable('answers', [
             'id' => $this->primaryKey(),

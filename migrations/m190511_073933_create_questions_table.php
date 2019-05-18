@@ -15,6 +15,7 @@ class m190511_073933_create_questions_table extends Migration
         $this->dropForeignKey('questions_answers_fk', 'answers');
         $this->dropForeignKey('questions_tags_questions_fk', 'questions_tags');
         $this->dropForeignKey('questions_packs_questions_q_fk', 'questions_packs_questions');
+        $this->dropForeignKey('candidates_answers_questions_fk', 'candidates_answers');
         $this->dropTable('questions');
         $this->createTable('questions', [
             'id' => $this->primaryKey(),
