@@ -33,7 +33,7 @@ class RoomsController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'create', 'update', 'delete', 'view'],
+                        'actions' => ['index', 'create', 'update', 'delete', 'view', 'testing'],
                         'allow' => true,
                         'roles' => ['manager', 'admin'],
                     ],
@@ -80,13 +80,6 @@ class RoomsController extends Controller
         $model = new Rooms();
 
         if ($model->load(Yii::$app->request->post())) {
-//            $start_datetime = Yii::$app->request->post()['Rooms']['start_datetime'];
-//            $start_datetime = date("Y-m-d H:m:s", strtotime($start_datetime));
-//            $model->start_datetime = $start_datetime;
-//
-//            $end_datetime = Yii::$app->request->post()['Rooms']['end_datetime'];
-//            $end_datetime = date("Y-m-d H:m:s", strtotime($end_datetime));
-//            $model->end_datetime = $end_datetime;
 
             $model->save();
 
@@ -186,6 +179,30 @@ class RoomsController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionTesting($id)
+    {
+        $model = $this->findModel($id);
+        $questions = $model->questions;
+        $currentCandidateAnswer = $model->getCurrentCandidateQuestion();
+
+        if ($currentCandidateAnswer->id != 0) {
+            foreach ($questions as $question) {
+                if ($question->id == $currentCandidateAnswer->id) {
+                    $currentQuestion = $question;
+                }
+            }
+        } else {
+            $currentQuestion = $questions[0];
+        }
+
+        $currentQuestion;
+
+        return $this->render('testing', [
+            'model' => $model,
+            'currentQuestion' => $currentQuestion,
+        ]);
     }
 
     /**

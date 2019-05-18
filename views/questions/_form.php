@@ -62,7 +62,6 @@ $this->registerJsFile(
                 'title' => 'Is correct?',
                 'type' => 'checkbox',
                 'options' => [
-                    'class' => 'radio',
                     'group-name' => 'is-right-checkbox'
                 ],
             ]

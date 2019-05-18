@@ -60,6 +60,20 @@ class Rooms extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getQuestions() {
+        $questionPackQuestions = $this->questionsPack->questionsPacksQuestions;
+        $questions = array_map(function ($questionPack) { return $questionPack->question; }, $questionPackQuestions);
+        return $questions;
+    }
+
+    public function getCurrentCandidateQuestion() {
+        $candidateId = Yii::$app->user->getId();
+        $candidateAnswers = CandidatesAnswers::find()
+                                ->where(['user_id' => $candidateId])
+                                ->orderBy(['id' => SORT_DESC])->all();
+        return isset($candidateAnswers[0]) ? $candidateAnswers[0] : 0;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
