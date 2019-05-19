@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii2mod\editable\EditableColumn;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Rooms */
@@ -10,6 +11,7 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Rooms', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
 ?>
 <div class="rooms-view">
 
@@ -27,16 +29,21 @@ $this->params['breadcrumbs'][] = $this->title;
                         'method' => 'post',
                     ],
                 ]) ?>
-                <?= Html::tag('span', 'Change status', ['class' => 'btn btn-primary']) ?>
-            <?php } ?>
+                <?= Html::dropDownList('cat', $model->state,
+                        ['New' => 'New', 'Open' => 'Open', 'Finished' => 'Finished'],
+                        ['class' => 'state-dropdown btn btn-primary', 'roomId' => $model->id]); ?>
+        <?php } ?>
 
-            <?php if ($model->state == 'Open') { ?>
-                <?php Yii::$app->session->setFlash('success', "The testing is open! Please, press the button 'Start testing'."); ?>
-                <?= Html::a('Start testing', ['testing', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
-            <?php } else if($model->state == 'Closed') {
-                Yii::$app->session->setFlash('warning', "Testing is finished. Go to 'Overall Results' to see your success");
-            } else {
-                Yii::$app->session->setFlash('warning', "Please wait for the testing start");
+
+        <?php if (array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()))[0] == 'candidate') {
+                if ($model->state == 'Open') { ?>
+                    <?php Yii::$app->session->setFlash('success', "The testing is open! Please, press the button 'Start testing'."); ?>
+                    <?= Html::a('Start testing', ['testing', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
+                <?php } else if ($model->state == 'Closed') {
+                    Yii::$app->session->setFlash('warning', "Testing is finished. Go to 'Overall Results' to see your success");
+                } else {
+                    Yii::$app->session->setFlash('warning', "Please wait for the testing start");
+                }
             }
         ?>
 

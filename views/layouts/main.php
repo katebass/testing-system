@@ -42,9 +42,9 @@ $this->registerJsFile(
         ];
     } else {
         $menuItems = [
-            ['label' => 'Questions', 'url' => ['/questions/index'], 'visible' => Yii::$app->user->can('manager'),],
+            ['label' => 'Questions', 'url' => ['/questions/index'], 'visible' => Yii::$app->user->can('manager')],
             //['label' => 'Tags', 'url' => ['/tags/index']],
-            ['label' => 'Questions Packs', 'url' => ['/questions-packs/index']],
+            ['label' => 'Questions Packs', 'url' => ['/questions-packs/index'], 'visible' => Yii::$app->user->can('manager')],
             ['label' => 'Rooms', 'url' => ['/rooms/index']],
             ['label' => 'Overall Results', 'url' => ['/rooms-candidates/index']],
             ['label' => 'Logout (' . Yii::$app->user->identity->name . ')', 'url' => ['/site/logout']]

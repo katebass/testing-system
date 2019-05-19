@@ -36,7 +36,7 @@ class RoomsController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'update', 'delete', 'view', 'testing',  'change-room-state'],
+                        'actions' => ['create', 'update', 'delete', 'view', 'testing',  'change-room-state', 'change-state-dropdown'],
                         'allow' => true,
                         'roles' => ['manager', 'admin'],
                     ],
@@ -58,6 +58,15 @@ class RoomsController extends Controller
                 'modelClass' => Rooms::class,
             ],
         ];
+    }
+
+    public function actionChangeStateDropdown () {
+        $newValue = Yii::$app->request->post('newValue');
+
+        $model = Rooms::findOne(Yii::$app->request->post('roomId'));
+        $model->state = $newValue;
+        $model->save();
+        return json_encode('success');
     }
 
     /**

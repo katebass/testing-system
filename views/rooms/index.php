@@ -67,17 +67,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'points',
             [
-            'class' => 'yii\grid\ActionColumn',
-            'template' => '{openRoom}',
-            'buttons' => [
-                'openRoom' => function($url, $model) {     // render your custom button
-                    return Html::a('Open Room', ['/rooms/view?id=' . $model->id], ['class'=>'btn btn-primary']);
-                }
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{openRoom}',
+                'buttons' => [
+                    'openRoom' => function($url, $model) {     // render your custom button
+                        return Html::a('Open Room', ['/rooms/view?id=' . $model->id], ['class'=>'btn btn-primary']);
+                    }
             ]
-        ],
-
-            ['class' => 'yii\grid\ActionColumn',
-                'template' => '{update}{delete}'],
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update}{delete}',
+                'visible' => Yii::$app->user->can('manager'),
+            ],
         ],
     ]); ?>
 

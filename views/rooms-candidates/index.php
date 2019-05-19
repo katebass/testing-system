@@ -40,9 +40,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     return $model->candidate->email;
                 },
+                'visible' => Yii::$app->user->can('manager'),
             ],
             'points',
             [
+                'attribute' => 'conclusion',
+                'visible' => Yii::$app->user->can('candidate'),
+            ],
+            [
+                'visible' => Yii::$app->user->can('manager'),
                 'class' => EditableColumn::class,
                 'attribute' => 'conclusion',
                 'value' => function ($model) {
@@ -51,7 +57,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'url' => ['change-conclusion'],
             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'visible' => Yii::$app->user->can('manager'),
+            ],
         ],
     ]); ?>
 

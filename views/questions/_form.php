@@ -11,11 +11,6 @@ use yii\helpers\ArrayHelper;
 /* @var $model app\models\Questions */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->registerJsFile(
-    Yii::$app->request->baseUrl.'/js/questions.js',
-    ['depends' => [\yii\web\JqueryAsset::className()]]
-);
-
 ?>
 
 <div class="questions-form">

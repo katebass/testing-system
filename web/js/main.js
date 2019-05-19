@@ -10,3 +10,23 @@ $("input:checkbox").on('click', function() {
         $box.prop("checked", true);
     }
 });
+
+
+$('.state-dropdown').on('change', function () {
+    var dropdownValue = this.options[this.selectedIndex].value,
+        roomId = this.getAttribute('roomId');
+
+    $.ajax({
+        url: '/rooms/change-state-dropdown',
+        type: 'POST',
+        data: {
+            'newValue': dropdownValue,
+            'roomId': roomId
+        },
+        success: function (res) {
+        },
+        error: function () {
+            console.log('error');
+        }
+    });
+});

@@ -61,7 +61,7 @@ use yii\widgets\ActiveForm;
     <?php
     echo $form->field($model, 'roomsCandidates')->widget(MultipleInput::className(), [
         'addButtonPosition' => MultipleInput::POS_HEADER, // show add button in the header
-        'min' => 2,
+        'min' => 1,
         'columns' => [
             [
                 'name'  => 'candidate_id',
@@ -69,7 +69,9 @@ use yii\widgets\ActiveForm;
                 'title' => 'Candidates Emails',
                 'items' => [
                     'prompt' => 'Please, choose a user email',
-                    ArrayHelper::map(app\models\User::find()->all(), 'id', 'email')
+                    ArrayHelper::map(app\models\User::find()
+                        ->where(['in', 'id', Yii::$app->authManager->getUserIdsByRole('candidate')])
+                        ->all(), 'id', 'email')
                 ]
             ]
         ]
