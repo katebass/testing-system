@@ -237,7 +237,12 @@ class RoomsController extends Controller
                             break;
                         }
                     }
-                    $currentQuestion = isset($questions[$i+1]) ? $questions[$i+1] : false;
+                    if (isset($questions[$i+1])) {
+                        $currentQuestion = $questions[$i+1];
+                    } else {
+                        Yii::$app->session->setFlash('success', "Congratulations! You have finished the testing!");
+                        $currentQuestion = false;
+                    }
                     break;
                 }
             }
@@ -248,7 +253,12 @@ class RoomsController extends Controller
             if ($currentCandidateQuestion) {
                 for ($i = 0; $i < sizeof($questions); $i++) {
                     if ($questions[$i]->id == $currentCandidateQuestion->question_id) {
-                        $currentQuestion = isset($questions[$i + 1]) ? $questions[$i + 1] : false;
+                        if (isset($questions[$i + 1])) {
+                            $currentQuestion = $questions[$i + 1];
+                        } else {
+                            Yii::$app->session->setFlash('warning', "You have already finished the testing!");
+                            $currentQuestion = false;
+                        }
                     }
                 }
             } else {
