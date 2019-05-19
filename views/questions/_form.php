@@ -50,7 +50,7 @@ $this->registerJsFile(
     <?php
     echo $form->field($model, 'answers')->widget(MultipleInput::className(), [
         'addButtonPosition' => MultipleInput::POS_HEADER, // show add button in the header
-        'min' => 4,
+        'min' => 2,
         'columns' => [
             [
                 'name'  => 'answer',

@@ -71,7 +71,7 @@ class Rooms extends \yii\db\ActiveRecord
         $candidateAnswers = CandidatesAnswers::find()
                                 ->where(['user_id' => $candidateId])
                                 ->orderBy(['id' => SORT_DESC])->all();
-        return isset($candidateAnswers[0]) ? $candidateAnswers[0] : 0;
+        return isset($candidateAnswers[0]) ? $candidateAnswers[0] : false;
     }
 
     /**

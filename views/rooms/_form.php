@@ -62,7 +62,6 @@ use yii\widgets\ActiveForm;
     echo $form->field($model, 'roomsCandidates')->widget(MultipleInput::className(), [
         'addButtonPosition' => MultipleInput::POS_HEADER, // show add button in the header
         'min' => 2,
-        'max' => 2,
         'columns' => [
             [
                 'name'  => 'candidate_id',

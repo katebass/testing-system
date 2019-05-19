@@ -18,25 +18,26 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php $form = ActiveForm::begin(); ?>
-
+    <form action="testing?id=<?= $model->id ?>" method="POST">
+    <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
+    <input type="hidden" name="questionId" value="<?= $currentQuestion->id ?>" />
     <h3>Question: <strong><?= $currentQuestion->question ?></strong></h3>
 
     <div class="testing-answers">
         <?php foreach ($currentQuestion->answers as $answer) { ?>
-            <?=
-                    $form->field($answer, 'answer')
-                     ->checkbox(['label' => null, 'group-name' => 'is-right-checkbox'])
-                     ->label(ucfirst($answer->answer))
-            ?>
+            <div class="form-group field-answers-answer required">
+            <label class="control-label" for="answer_<?= $answer->id ?>"><?=$answer->answer?></label>
+            <input type="checkbox" group-name="is-right-checkbox" name="answer_<?= $answer->id ?>" value="<?= $answer->id ?>">
+
+            </div>
         <?php } ?>
     </div>
 
 
     <div class="form-group">
-        <?= Html::submitButton('Answer', ['class' => 'btn btn-success']) ?>
+        <input type="submit" class='btn btn-success' value="Answer">
     </div>
 
-    <?php ActiveForm::end(); ?>
+   </form>
 
 </div>

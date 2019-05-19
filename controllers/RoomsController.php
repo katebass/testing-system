@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\Answers;
+use app\models\CandidatesAnswers;
+use app\models\Questions;
 use app\models\RoomsCandidates;
 use Yii;
 use app\models\Rooms;
@@ -185,19 +187,80 @@ class RoomsController extends Controller
     {
         $model = $this->findModel($id);
         $questions = $model->questions;
-        $currentCandidateAnswer = $model->getCurrentCandidateQuestion();
+        $currentQuestion = false;
+        //$currentQuestion = $questions[0];
 
-        if ($currentCandidateAnswer->id != 0) {
-            foreach ($questions as $question) {
-                if ($question->id == $currentCandidateAnswer->id) {
-                    $currentQuestion = $question;
+        if (Yii::$app->request->post()) {
+            // get candidate answer
+            $CandidateAnswerId = 0;
+            foreach($_POST as $key => $value) {
+                if (strpos($key, 'answer_') === 0) {
+                    $CandidateAnswerId = $value;
                 }
             }
+
+            // create record about candidate's answer
+            $candidateAnswers = new CandidatesAnswers([
+                'user_id' => Yii::$app->user->getId(),
+                'question_id' => Yii::$app->request->post('questionId'),
+                'room_id' => $id,
+                'answer_id' => $CandidateAnswerId
+            ]);
+            $candidateAnswers->save();
+
+            // get question to compare answers
+            $question = Questions::findOne(Yii::$app->request->post('questionId'));
+            $allAnswers = $question->answers;
+
+            // find the question among the whole list to assign next
+            for ($i = 0; $i < sizeof($questions); $i++) {
+                if ($questions[$i]->id == $question->id) {
+                    foreach ($allAnswers as $answer) {
+                        if ($answer->id == $CandidateAnswerId) {
+                            // save the overall result
+                            $result = RoomsCandidates::find()
+                                        ->where([
+                                            'candidate_id' => Yii::$app->user->getId(),
+                                            'room_id' => $id])
+                                        ->one();
+                            if(!$result) {
+                                $result = new RoomsCandidates([
+                                    'room_id' => $id,
+                                    'candidate_id' => Yii::$app->user->getId(),
+                                    'points' => 0
+                                ]);
+                            }
+                            if ($answer->is_correct) {
+                                $result->points += $questions[$i]->points;
+                            }
+                            $result->save();
+                            break;
+                        }
+                    }
+                    $currentQuestion = isset($questions[$i+1]) ? $questions[$i+1] : false;
+                    break;
+                }
+            }
+
         } else {
-            $currentQuestion = $questions[0];
+            $currentCandidateQuestion = $model->getCurrentCandidateQuestion();
+
+            if ($currentCandidateQuestion) {
+                for ($i = 0; $i < sizeof($questions); $i++) {
+                    if ($questions[$i]->id == $currentCandidateQuestion->question_id) {
+                        $currentQuestion = isset($questions[$i + 1]) ? $questions[$i + 1] : false;
+                    }
+                }
+            } else {
+                $currentQuestion = $questions[0];
+            }
         }
 
-        $currentQuestion;
+        if (!$currentQuestion) {
+            return $this->render('view', [
+                'model' => $model,
+            ]);
+        }
 
         return $this->render('testing', [
             'model' => $model,
