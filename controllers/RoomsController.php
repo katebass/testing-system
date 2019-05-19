@@ -13,6 +13,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii2mod\editable\EditableAction;
 
 /**
  * RoomsController implements the CRUD actions for Rooms model.
@@ -35,11 +36,26 @@ class RoomsController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'create', 'update', 'delete', 'view', 'testing'],
+                        'actions' => ['create', 'update', 'delete', 'view', 'testing',  'change-room-state'],
                         'allow' => true,
                         'roles' => ['manager', 'admin'],
                     ],
+                    [
+                        'actions' => ['index', 'view', 'testing'],
+                        'allow' => true,
+                        'roles' => ['manager', 'admin', 'candidate'],
+                    ],
                 ],
+            ],
+        ];
+    }
+
+    public function actions()
+    {
+        return [
+            'change-room-state' => [
+                'class' => EditableAction::class,
+                'modelClass' => Rooms::class,
             ],
         ];
     }
@@ -58,6 +74,8 @@ class RoomsController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+
 
     /**
      * Displays a single Rooms model.

@@ -42,7 +42,7 @@ $this->registerJsFile(
         ];
     } else {
         $menuItems = [
-            ['label' => 'Questions', 'url' => ['/questions/index']],
+            ['label' => 'Questions', 'url' => ['/questions/index'], 'visible' => Yii::$app->user->can('manager'),],
             //['label' => 'Tags', 'url' => ['/tags/index']],
             ['label' => 'Questions Packs', 'url' => ['/questions-packs/index']],
             ['label' => 'Rooms', 'url' => ['/rooms/index']],

@@ -16,15 +16,30 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-        <?= Html::a('Start testing', ['testing', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+
+        <?php
+            if (array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()))[0] == 'manager') { ?>
+                <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
+                <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => 'Are you sure you want to delete this item?',
+                        'method' => 'post',
+                    ],
+                ]) ?>
+                <?= Html::tag('span', 'Change status', ['class' => 'btn btn-primary']) ?>
+            <?php } ?>
+
+            <?php if ($model->state == 'Open') { ?>
+                <?php Yii::$app->session->setFlash('success', "The testing is open! Please, press the button 'Start testing'."); ?>
+                <?= Html::a('Start testing', ['testing', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
+            <?php } else if($model->state == 'Closed') {
+                Yii::$app->session->setFlash('warning', "Testing is finished. Go to 'Overall Results' to see your success");
+            } else {
+                Yii::$app->session->setFlash('warning', "Please wait for the testing start");
+            }
+        ?>
+
     </p>
 
     <?= DetailView::widget([

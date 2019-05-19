@@ -32,9 +32,14 @@ class RoomsCandidatesController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'create', 'update', 'delete', 'view', 'change-conclusion'],
+                        'actions' => ['create', 'update', 'delete', 'change-conclusion'],
                         'allow' => true,
                         'roles' => ['manager', 'admin'],
+                    ],
+                    [
+                        'actions' => ['index', 'view', 'testing'],
+                        'allow' => true,
+                        'roles' => ['manager', 'admin', 'candidate'],
                     ],
                 ],
             ],

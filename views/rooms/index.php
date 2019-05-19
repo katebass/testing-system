@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii2mod\editable\EditableColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RoomsSearch */
@@ -47,7 +48,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->end_datetime ? $model->end_datetime : 'Not ended';
                 },
             ],
-            'state',
+            [
+                'attribute' => 'state',
+                'visible' => Yii::$app->user->can('candidate'),
+            ],
+            [
+                'class' => EditableColumn::class,
+                'attribute' => 'state',
+                'type' => 'select',
+                'editableOptions' => function ($model) {
+                    return [
+                        'source' => ['New' => 'New', 'Open' => 'Open', 'Finished' => 'Finished'],
+                        'value' => $model->state,
+                    ];
+                },
+                'url' => ['change-room-state'],
+                'visible' => Yii::$app->user->can('manager'),
+            ],
             'points',
             [
             'class' => 'yii\grid\ActionColumn',
