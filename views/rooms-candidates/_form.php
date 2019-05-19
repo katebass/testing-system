@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\RoomsCandidates */
@@ -12,11 +13,33 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'room_id')->textInput() ?>
-
-    <?= $form->field($model, 'candidate_id')->textInput() ?>
-
-    <?= $form->field($model, 'points')->textInput() ?>
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            'id',
+            [
+                'attribute' => 'conclusion',
+                'label' => 'Room name',
+                'value' => function ($model) {
+                    return $model->room->name;
+                },
+            ],
+            'candidate_id',
+            [
+                'label' => 'email',
+                'value' => function ($model) {
+                    return $model->candidate->email;
+                },
+            ],
+            [
+                'label' => 'Candidate Name',
+                'value' => function ($model) {
+                    return $model->candidate->name;
+                },
+            ],
+            'points',
+        ],
+    ]) ?>
 
     <?= $form->field($model, 'conclusion')->textarea(['rows' => 6]) ?>
 
