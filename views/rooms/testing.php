@@ -23,15 +23,18 @@ $this->params['breadcrumbs'][] = 'Update';
     <input type="hidden" name="questionId" value="<?= $currentQuestion->id ?>" />
     <h3>Question: <strong><?= $currentQuestion->question ?></strong></h3>
 
-    <div class="testing-answers">
+    <ul class="list-group">
         <?php foreach ($currentQuestion->answers as $answer) { ?>
-            <div class="form-group field-answers-answer required">
-            <label class="control-label" for="answer_<?= $answer->id ?>"><?=$answer->answer?></label>
-            <input type="checkbox" group-name="is-right-checkbox" name="answer_<?= $answer->id ?>" value="<?= $answer->id ?>">
-
+            <div class="list-group-item">
+                <input
+                    type="checkbox"
+                    group-name="is-right-checkbox"
+                    name="answer_<?= $answer->id ?>"
+                    value="<?= $answer->id ?>">
+                <label class="control-label" for="answer_<?= $answer->id ?>"><?= ucfirst($answer->answer) ?></label>
             </div>
         <?php } ?>
-    </div>
+    </ul>
 
 
     <div class="form-group">
