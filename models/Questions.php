@@ -34,7 +34,8 @@ class Questions extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'points'], 'integer'],
-            [['name', 'question'], 'required'],
+            [['name'], 'unique'],
+            [['name'], 'required'],
             [['question'], 'string'],
             [['name'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -50,7 +51,8 @@ class Questions extends \yii\db\ActiveRecord
             'id' => 'ID',
             'user_id' => 'User ID',
             'name' => 'Name',
-            'question' => 'Question',
+            'question' => 'Question-body',
+            'points' => 'Points per question',
         ];
     }
 

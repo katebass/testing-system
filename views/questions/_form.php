@@ -57,6 +57,7 @@ use yii\helpers\ArrayHelper;
                 'title' => 'Is correct?',
                 'type' => 'checkbox',
                 'options' => [
+                    'required' => true,
                     'group-name' => 'is-right-checkbox'
                 ],
             ]

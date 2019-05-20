@@ -21,7 +21,9 @@ $this->params['breadcrumbs'][] = 'Update';
     <form action="testing?id=<?= $model->id ?>" method="POST">
     <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
     <input type="hidden" name="questionId" value="<?= $currentQuestion->id ?>" />
-    <h3>Question: <strong><?= $currentQuestion->question ?></strong></h3>
+
+    <h3><?= $currentQuestion->name ?></h3>
+    <h3><?= isset($currentQuestion->question) ? $currentQuestion->question : '' ?></h3>
 
     <ul class="list-group">
         <?php foreach ($currentQuestion->answers as $answer) { ?>

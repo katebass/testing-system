@@ -40,13 +40,13 @@ protected/data/*.db
 themes/classic/views/
 
 # config files should not be added to the repository
-config/console.php
-config/db.php
-config/mode.php
-config/params.php
-config/test.php
-config/test_db.php
-config/web.php
+#config/console.php
+#config/db.php
+#config/mode.php
+#config/params.php
+#config/test.php
+#config/test_db.php
+#config/web.php
 
 # runtime and assets directory added to ignore
 runtime/*

@@ -33,6 +33,7 @@ class Answers extends \yii\db\ActiveRecord
             [['question_id', 'answer', 'is_correct'], 'required'],
             [['question_id', 'is_correct'], 'integer'],
             [['answer'], 'string', 'max' => 255],
+            [['answer.name'], 'required'],
             [['question_id'], 'exist', 'skipOnError' => true, 'targetClass' => Questions::className(), 'targetAttribute' => ['question_id' => 'id']],
         ];
     }
