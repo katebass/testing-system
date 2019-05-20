@@ -23,11 +23,8 @@ use yii\widgets\ActiveForm;
                 'name'  => 'question_id',
                 'type'  => 'dropDownList',
                 'title' => 'Questions',
-                'items' => [
-                    'prompt' => 'Please, choose a question',
-                    ArrayHelper::map(app\models\Questions::find()->all(), 'id', 'name')
-                ],
-                'options' => ['required' => true]
+                'items' => ArrayHelper::map(app\models\Questions::find()->all(), 'id', 'name'),
+                'options' => ['required' => true, 'prompt' => 'Please, choose a question'],
             ]
         ]
     ])

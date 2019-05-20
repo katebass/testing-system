@@ -22,42 +22,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-
-
-    <?php
-//    echo $form->field($model, 'start_datetime')->widget(
-//        'trntv\yii\datetime\DateTimeWidget',
-//        [
-//            'phpDatetimeFormat' => 'dd.MM.yyyy, HH:mm:ss',
-//            'clientOptions' => [
-//                'allowInputToggle' => false,
-//                'sideBySide' => true,
-//                'widgetPositioning' => [
-//                    'horizontal' => 'auto',
-//                    'vertical' => 'auto'
-//                ]
-//            ]
-//        ]
-//    );
-    ?>
-
-    <?php
-//    echo $form->field($model, 'end_datetime')->widget(
-//        'trntv\yii\datetime\DateTimeWidget',
-//        [
-//            'phpDatetimeFormat' => 'dd.MM.yyyy, HH:mm:ss',
-//            'clientOptions' => [
-//                'allowInputToggle' => false,
-//                'sideBySide' => true,
-//                'widgetPositioning' => [
-//                    'horizontal' => 'auto',
-//                    'vertical' => 'auto'
-//                ]
-//            ]
-//        ]
-//    );
-    ?>
-
     <?php
     echo $form->field($model, 'roomsCandidates')->widget(MultipleInput::className(), [
         'addButtonPosition' => MultipleInput::POS_HEADER, // show add button in the header
@@ -67,12 +31,10 @@ use yii\widgets\ActiveForm;
                 'name'  => 'candidate_id',
                 'type'  => 'dropDownList',
                 'title' => 'Candidates Emails',
-                'items' => [
-                    'prompt' => 'Please, choose a user email',
-                    ArrayHelper::map(app\models\User::find()
-                        ->where(['in', 'id', Yii::$app->authManager->getUserIdsByRole('candidate')])
-                        ->all(), 'id', 'email')
-                ]
+                'items' =>  ArrayHelper::map(app\models\User::find()
+                                ->where(['in', 'id', Yii::$app->authManager->getUserIdsByRole('candidate')])
+                                ->all(), 'id', 'email'),
+                'options' => ['prompt' => 'Please, choose a user email', 'required' => true]
             ]
         ]
     ])
