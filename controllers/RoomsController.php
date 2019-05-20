@@ -36,14 +36,19 @@ class RoomsController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'update', 'delete', 'view', 'testing',  'change-room-state', 'change-state-dropdown'],
+                        'actions' => ['create', 'update', 'delete', 'view',  'change-room-state', 'change-state-dropdown'],
                         'allow' => true,
                         'roles' => ['manager', 'admin'],
                     ],
                     [
-                        'actions' => ['index', 'view', 'testing'],
+                        'actions' => ['index', 'view'],
                         'allow' => true,
                         'roles' => ['manager', 'admin', 'candidate'],
+                    ],
+                    [
+                        'actions' => ['index', 'view', 'testing'],
+                        'allow' => true,
+                        'roles' => ['admin', 'candidate'],
                     ],
                 ],
             ],
@@ -62,7 +67,6 @@ class RoomsController extends Controller
 
     public function actionChangeStateDropdown () {
         $newValue = Yii::$app->request->post('newValue');
-
         $model = Rooms::findOne(Yii::$app->request->post('roomId'));
         $model->state = $newValue;
         $model->save();
@@ -320,4 +324,6 @@ class RoomsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
 }

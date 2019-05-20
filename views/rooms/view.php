@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 if ($model->state == 'Open') { ?>
                     <?php Yii::$app->session->setFlash('success', "The testing is open! Please, press the button 'Start testing'."); ?>
                     <?= Html::a('Start testing', ['testing', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
-                <?php } else if ($model->state == 'Closed') {
+                <?php } else if ($model->state == 'Finished') {
                     Yii::$app->session->setFlash('warning', "Testing is finished. Go to 'Overall Results' to see your success");
                 } else {
                     Yii::$app->session->setFlash('warning', "Please wait for the testing start");

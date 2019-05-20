@@ -89,4 +89,22 @@ class Rooms extends \yii\db\ActiveRecord
     {
         return $this->hasMany(RoomsCandidates::className(), ['room_id' => 'id']);
     }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($this->state == 'Open') {
+                if ($this->start_datetime === null) {
+                    $this->start_datetime = date("Y-m-d H:i:s");
+                }
+            } elseif ($this->state == 'Finished') {
+                if ($this->end_datetime === null) {
+                    $this->end_datetime = date("Y-m-d H:i:s");
+                }
+            }
+
+            return true;
+        }
+        return false;
+    }
 }
